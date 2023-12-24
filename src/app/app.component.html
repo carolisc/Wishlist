@@ -1,0 +1,46 @@
+<div class="container">
+
+  <form class="row mt-3 gx-3 gy-2 align-items-center justify-content-center">
+    <div class="col-sm-6">
+      <label for="specificSizeInputName">Wish</label>
+      <input type="text" class="form-control" [(ngModel)]="newWishText">
+    </div>
+    <div class="col-auto">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        (click)="$event.preventDefault(); addNewWish()"
+      >Add Wish</button>
+    </div>
+  </form>
+
+  <div *ngIf="items.length == 0; else showItems"> <!-- you can only have 1 structural directive (ngIf + ngFor) per document (that is loaded)-->
+    There are no wishes to display.
+  </div>
+
+  <ng-template #noItems>
+    There are no wishes to display.
+  </ng-template>
+
+  <ng-template #showItems>
+    <ul *ngIf="items.length > 0" class="wish-list">
+      <li *ngFor="let item of items; index as ii"> <!-- it's adding an LI element for every item in the items array -->
+        <!-- bootstrap -->
+        <div class="form-check">
+          <label class="form-check-label">
+            <input 
+              class="checkbox" 
+              type="checkbox"
+              [checked]="item.isComplete" 
+              [attr.data-index]="ii"
+              (click)="toggleItem(item)"
+            > {{item.wishText}} <!-- when you want to bind something to the JS property of an object, put brackets on the name and assign the JS property that will be bound to that property, AND TO bind to attributes uses attr. then attribute name -->
+          </label>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+
+
+  
+</div>
